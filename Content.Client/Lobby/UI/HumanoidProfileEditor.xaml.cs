@@ -373,6 +373,8 @@ namespace Content.Client.Lobby.UI
 
             #endregion Sex
 
+            InitializeVoice(); // Art-TTS
+
             #region Age
 
             AgeEdit.OnTextChanged += args =>
@@ -1346,6 +1348,7 @@ namespace Content.Client.Lobby.UI
             UpdateFlavorTextEdit();
             UpdateFlavorPreview(); // Orion
             UpdateSexControls();
+            UpdateTTSVoicesControls(); // Art-TTS
             UpdateGenderControls();
             UpdateSkinColor();
             UpdateSpawnPriorityControls();
@@ -1911,8 +1914,17 @@ namespace Content.Client.Lobby.UI
 
             UpdateGenderControls();
             Markings.SetSex(newSex);
+            UpdateTTSVoicesControls(); // Art-TTS
             ReloadPreview();
         }
+
+        // Art-TTS Start
+        private void SetVoice(string newVoice)
+        {
+            Profile = Profile?.WithVoice(newVoice);
+            IsDirty = true;
+        }
+        // Art-TTS End
 
         private void SetGender(Gender newGender)
         {

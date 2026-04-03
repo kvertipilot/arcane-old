@@ -510,6 +510,7 @@
   - type: VisibleContraband # Goobstation
   - type: Posing # Orion
   - type: MomentumSteering # Goobstation - No steer
+  - type: TTS # Art-TTS
 
 - type: entity
   save: false
