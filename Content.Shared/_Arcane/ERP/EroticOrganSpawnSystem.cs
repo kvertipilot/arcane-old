@@ -15,55 +15,39 @@ public sealed class EroticOrganSpawnSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedContainerSystem _containers = default!;
 
-    private static readonly (string Proto, string Slot)[] GroinCommon =
-    [
-        ("OrganAnus", "anus"),
-    ];
-
-    private static readonly (string Proto, string Slot)[] GroinMaleOrgans =
-    [
-        ("OrganPenis", "penis"),
-        ("OrganTesticles", "testicles"),
-    ];
-
-    private static readonly (string Proto, string Slot)[] GroinFemaleOrgans =
-    [
-        ("OrganVagina", "vagina"),
-        ("OrganUterus", "uterus"),
-    ];
-
-    private static readonly (string Proto, string Slot)[] ChestFemaleOrgans =
-    [
-        ("OrganBreasts", "breasts"),
-    ];
-
     public override void Initialize()
     {
         base.Initialize();
         // Run after SharedBodySystem so body parts are already spawned when we look for them.
-        SubscribeLocalEvent<HumanoidAppearanceComponent, MapInitEvent>(OnMapInit, after: [typeof(SharedBodySystem)]);
-        SubscribeLocalEvent<HumanoidAppearanceComponent, ProfileLoadFinishedEvent>(OnProfileLoaded);
-        SubscribeLocalEvent<HumanoidAppearanceComponent, SexChangedEvent>(OnSexChanged);
+        SubscribeLocalEvent<EroticOrgansComponent, MapInitEvent>(OnMapInit, after: [typeof(SharedBodySystem)]);
+        SubscribeLocalEvent<EroticOrgansComponent, ProfileLoadFinishedEvent>(OnProfileLoaded);
+        SubscribeLocalEvent<EroticOrgansComponent, SexChangedEvent>(OnSexChanged);
     }
 
-    private void OnMapInit(Entity<HumanoidAppearanceComponent> ent, ref MapInitEvent args)
+    private void OnMapInit(Entity<EroticOrgansComponent> ent, ref MapInitEvent args)
     {
-        SpawnEroticOrgans(ent, ent.Comp.Sex);
+        if (!TryComp<HumanoidAppearanceComponent>(ent, out var humanoid))
+            return;
+
+        SpawnEroticOrgans(ent, ent.Comp, humanoid.Sex);
     }
 
-    private void OnProfileLoaded(Entity<HumanoidAppearanceComponent> ent, ref ProfileLoadFinishedEvent args)
+    private void OnProfileLoaded(Entity<EroticOrgansComponent> ent, ref ProfileLoadFinishedEvent args)
+    {
+        if (!TryComp<HumanoidAppearanceComponent>(ent, out var humanoid))
+            return;
+
+        RemoveEroticOrgans(ent);
+        SpawnEroticOrgans(ent, ent.Comp, humanoid.Sex);
+    }
+
+    private void OnSexChanged(Entity<EroticOrgansComponent> ent, ref SexChangedEvent args)
     {
         RemoveEroticOrgans(ent);
-        SpawnEroticOrgans(ent, ent.Comp.Sex);
+        SpawnEroticOrgans(ent, ent.Comp, args.NewSex);
     }
 
-    private void OnSexChanged(Entity<HumanoidAppearanceComponent> ent, ref SexChangedEvent args)
-    {
-        RemoveEroticOrgans(ent);
-        SpawnEroticOrgans(ent, args.NewSex);
-    }
-
-    private void SpawnEroticOrgans(EntityUid uid, Sex sex)
+    private void SpawnEroticOrgans(EntityUid uid, EroticOrgansComponent def, Sex sex)
     {
         if (sex == Sex.Unsexed)
             return;
@@ -73,17 +57,17 @@ public sealed class EroticOrganSpawnSystem : EntitySystem
 
         if (groin.HasValue)
         {
-            TrySpawnOrgans(uid, groin.Value, GroinCommon);
+            TrySpawnOrgans(uid, groin.Value, def.GroinCommon);
 
             if (sex is Sex.Male or Sex.Futanari)
-                TrySpawnOrgans(uid, groin.Value, GroinMaleOrgans);
+                TrySpawnOrgans(uid, groin.Value, def.GroinMale);
 
             if (sex is Sex.Female or Sex.Futanari)
-                TrySpawnOrgans(uid, groin.Value, GroinFemaleOrgans);
+                TrySpawnOrgans(uid, groin.Value, def.GroinFemale);
         }
 
         if (chest.HasValue && sex is Sex.Female or Sex.Futanari)
-            TrySpawnOrgans(uid, chest.Value, ChestFemaleOrgans);
+            TrySpawnOrgans(uid, chest.Value, def.ChestFemale);
 
         var ev = new EroticOrgansSpawnedEvent();
         RaiseLocalEvent(uid, ref ev);
@@ -99,15 +83,15 @@ public sealed class EroticOrganSpawnSystem : EntitySystem
         }
     }
 
-    private void TrySpawnOrgans(EntityUid bodyUid, EntityUid partUid, (string Proto, string Slot)[] organs)
+    private void TrySpawnOrgans(EntityUid bodyUid, EntityUid partUid, List<EroticOrganEntry> organs)
     {
-        foreach (var (proto, slot) in organs)
-            TrySpawnOrgan(bodyUid, partUid, proto, slot);
+        foreach (var entry in organs)
+            TrySpawnOrgan(bodyUid, partUid, entry.Proto, entry.Slot);
     }
 
-    private void TrySpawnOrgan(EntityUid bodyUid, EntityUid partUid, string protoId, string slotId)
+    private void TrySpawnOrgan(EntityUid bodyUid, EntityUid partUid, EntProtoId protoId, string slotId)
     {
-        if (!_proto.HasIndex<EntityPrototype>(protoId))
+        if (!_proto.HasIndex(protoId))
             return;
 
         _body.TryCreateOrganSlot(partUid, slotId, out _);

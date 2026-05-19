@@ -1,6 +1,6 @@
 - type: entity
   id: BaseEroticOrgan
-  parent: BaseItem
+  parent: BaseHumanOrgan
   abstract: true
   components:
   - type: Organ

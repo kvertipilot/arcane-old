@@ -93,8 +93,12 @@ public sealed class ArousalSystem : EntitySystem
         if (IsRefractory(comp))
             return;
 
-        RaiseLocalEvent(uid, new ArousedEvent(amount));
-        SetArousal((uid, comp), GetArousal(comp) + amount);
+        var before = GetArousal(comp);
+        var target = Math.Clamp(before + amount, 0f, comp.MaxArousal);
+        SetArousal((uid, comp), target);
+        var actual = target - before;
+        if (actual > 0f)
+            RaiseLocalEvent(uid, new ArousedEvent(actual));
     }
 
     public void ReduceArousal(EntityUid uid, float amount, ArousalComponent? comp = null)
@@ -155,10 +159,9 @@ public sealed class ArousalSystem : EntitySystem
             Dirty(entity.Owner, comp);
 
             UpdateAlerts(entity.Owner, ArousalPhase.Calm);
-            RaiseLocalEvent(entity.Owner, new ArousalPhaseChangedEvent(previous, ArousalPhase.Peak));
             var orgasmEv = new ArousalOrgasmEvent();
             RaiseLocalEvent(entity.Owner, ref orgasmEv);
-            RaiseLocalEvent(entity.Owner, new ArousalPhaseChangedEvent(ArousalPhase.Peak, ArousalPhase.Calm));
+            RaiseLocalEvent(entity.Owner, new ArousalPhaseChangedEvent(previous, ArousalPhase.Calm));
         }
         else
         {
