@@ -1,3 +1,4 @@
+erp-organ-section-title = ERP Органы
 erp-preferences-tab-status-label = ЕРП статус
 erp-preferences-tab-organs-header = Органы
 erp-preferences-tab-organ-penis = Пенис

@@ -20,6 +20,7 @@
 
 using System.Numerics;
 using Content.Client.DisplacementMap;
+using Content.Shared._Arcane.ERP.OrgansAppearance; // Arcane-edit
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
@@ -50,6 +51,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
     private void OnHandleState(EntityUid uid, HumanoidAppearanceComponent component, ref AfterAutoHandleStateEvent args)
     {
         UpdateSprite((uid, component, Comp<SpriteComponent>(uid)));
+        var ev = new HumanoidVisualStateUpdatedEvent(); RaiseLocalEvent(uid, ref ev); // Arcane-edit
     }
 
     private void OnCvarChanged(bool value)

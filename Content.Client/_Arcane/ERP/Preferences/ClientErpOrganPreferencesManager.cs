@@ -15,6 +15,12 @@ public sealed class ClientErpOrganPreferencesManager : IPostInjectInit
     {
         _net.RegisterNetMessage<MsgErpOrganPreferences>(HandleReceived);
         _net.RegisterNetMessage<MsgUpdateErpOrganPreferences>();
+        _net.Disconnect += OnDisconnect;
+    }
+
+    private void OnDisconnect(object? sender, NetDisconnectedArgs e)
+    {
+        _slots.Clear();
     }
 
     public ErpOrganPreferences GetSlot(int slot)

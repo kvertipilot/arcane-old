@@ -197,6 +197,7 @@ using Content.Goobstation.Common.CCVar; // Goob Station - Barks
 using Content.Goobstation.Common.Barks; // Goob Station - Barks
 using Content.Shared._Arcane.ERP; // Arcane-edit
 using Content.Client._Arcane.ERP.UI; // Arcane-edit
+using Content.Client._Arcane.ERP.OrgansAppearance; // Arcane-edit
 using Content.Client._Arcane.ERP.Preferences; // Arcane-edit
 using Content.Shared._Arcane.ERP.Preferences; // Arcane-edit
 namespace Content.Client.Lobby.UI
@@ -240,7 +241,7 @@ namespace Content.Client.Lobby.UI
         // Orion-End
 
         // Arcane-Start
-        private ErpPreferencesTab? _erpTab;
+        private ErpOrganSection? _erpOrganSection;
         // Arcane-End
 
         // One at a time.
@@ -705,11 +706,25 @@ namespace Content.Client.Lobby.UI
             #region Markings
 
             TabContainer.SetTabTitle(4, Loc.GetString("humanoid-profile-editor-markings-tab"));
+            // Arcane-Start
+            TabContainer.SetTabTitle(5, Loc.GetString("humanoid-profile-editor-erp-tab"));
+            // Arcane-End
 
             Markings.OnMarkingAdded += OnMarkingChange;
             Markings.OnMarkingRemoved += OnMarkingChange;
             Markings.OnMarkingColorChange += OnMarkingChange;
             Markings.OnMarkingRankChange += OnMarkingChange;
+
+            // Arcane-Start: refresh ERP organ section when server sends updated prefs
+            IoCManager.Resolve<ClientErpOrganPreferencesManager>().OnPreferencesReceived += (slot, prefs) =>
+            {
+                if (slot != CharacterSlot)
+                    return;
+                _erpOrganPrefs = prefs;
+                UpdateErpOrganSection();
+                _entManager.System<ErpOrganVisualsSystem>().RefreshPreview(PreviewDummy, prefs);
+            };
+            // Arcane-End
 
             #endregion Markings
 
@@ -853,30 +868,33 @@ namespace Content.Client.Lobby.UI
         }
 
         // Arcane-Start
-        private void RefreshErpTab()
+        private void InitErpOrganSection()
         {
-            if (_erpTab != null)
+            if (_erpOrganSection != null)
                 return;
 
-            _erpTab = new ErpPreferencesTab();
-            TabContainer.AddChild(_erpTab);
-            TabContainer.SetTabTitle(TabContainer.ChildCount - 1, Loc.GetString("humanoid-profile-editor-erp-tab"));
+            _erpOrganSection = new ErpOrganSection();
+            var erpScroll = new ScrollContainer { VerticalExpand = true };
+            erpScroll.AddChild(_erpOrganSection);
+            ErpTab.AddChild(erpScroll);
 
-            _erpTab.OnPreferencesChanged += prefs =>
+            _erpOrganSection.OnPreferencesChanged += prefs =>
             {
                 if (Profile == null || CharacterSlot == null)
                     return;
                 _erpOrganPrefs = prefs;
                 IsDirty = true;
+                _entManager.System<ErpOrganVisualsSystem>().RefreshPreview(PreviewDummy, prefs);
             };
         }
 
-        private void UpdateErpTabData()
+        private void UpdateErpOrganSection()
         {
-            if (_erpTab == null || Profile == null)
+            if (_erpOrganSection == null || Profile == null)
                 return;
 
-            _erpTab.SetPreferences(_erpOrganPrefs);
+            _erpOrganSection.SetSex(Profile.Sex);
+            _erpOrganSection.SetPreferences(_erpOrganPrefs);
         }
 
         private ErpOrganPreferences _erpOrganPrefs = ErpOrganPreferences.Default();
@@ -1414,7 +1432,7 @@ namespace Content.Client.Lobby.UI
             UpdateSkinColor();
             UpdateSpawnPriorityControls();
             UpdateErpPreferenceControls(); // Arcane-edit
-            UpdateErpTabData(); // Arcane-edit
+            UpdateErpOrganSection(); // Arcane-edit
             UpdateAgeEdit();
             UpdateEyePickers();
             UpdateSaveButton();
@@ -1432,7 +1450,7 @@ namespace Content.Client.Lobby.UI
             RefreshSpecies();
             RefreshTraits();
             RefreshFlavorText();
-            RefreshErpTab(); // Arcane-edit
+            InitErpOrganSection(); // Arcane-edit
             ReloadPreview();
 
             if (Profile != null)

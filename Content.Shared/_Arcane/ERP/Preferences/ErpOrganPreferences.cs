@@ -1,3 +1,4 @@
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._Arcane.ERP.Preferences;
@@ -28,6 +29,9 @@ public sealed class ErpOrganConfig
 
     /// <summary>Size index 1–8.</summary>
     public int Size { get; set; } = 3;
+
+    /// <summary>Tint color. Null = use character skin color.</summary>
+    public Color? Color { get; set; } = null;
 
     public static ErpOrganConfig Default() => new();
 }

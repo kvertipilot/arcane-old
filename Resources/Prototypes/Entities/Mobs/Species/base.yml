@@ -525,6 +525,21 @@
   components:
   - type: Absorbable # Goobstation - changelings
   - type: WraithAbsorbable # Goobstation - wraith
+  - type: EroticOrgans # Arcane-edit
+    groinCommon:
+    - proto: OrganAnus
+      slot: anus
+    groinMale:
+    - proto: OrganPenis
+      slot: penis
+    - proto: OrganTesticles
+      slot: testicles
+    groinFemale:
+    - proto: OrganVagina
+      slot: vagina
+    chestFemale:
+    - proto: OrganBreasts
+      slot: breasts
   - type: Barotrauma
     damage:
       types:
