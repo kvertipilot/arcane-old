@@ -35,3 +35,5 @@ markings-category-Snout = Snout
 markings-category-Chest = Chest
 markings-category-Tail = Tail
 markings-category-Overlay = Overlay
+# Arcane
+markings-category-Tracheas = Tracheas

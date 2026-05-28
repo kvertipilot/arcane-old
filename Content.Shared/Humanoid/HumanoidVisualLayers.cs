@@ -37,6 +37,7 @@ namespace Content.Shared.Humanoid
         Tail,
         Wings, // For IPC wings porting from SimpleStation
         Hair,
+        Tracheas,
         FacialHair,
         Face, // EE Plasmeme Port
         Chest,
