@@ -117,9 +117,6 @@ public sealed partial class ErpPanelSystem : EntitySystem
         customArousal = Math.Clamp(customArousal, 0, 300);
         customMoaning = Math.Clamp(customMoaning, 0, 300);
 
-        _arousal.AddArousal(user, interaction.UserArouse * customArousal / 100);
-        _arousal.AddArousal(target, interaction.TargetArouse * customArousal / 100);
-
         if (interaction.TargetArouse > 0)
             Spawn(_heartsProto, _transform.GetMapCoordinates(target));
 
@@ -129,8 +126,14 @@ public sealed partial class ErpPanelSystem : EntitySystem
         ProccessMessages(user, target, interaction);
         ProccessSounds(user, interaction);
 
-        ProccessMoan(user, customMoaning);
+        _arousal.AddArousal(target, interaction.TargetArouse * customArousal / 100);
         ProccessMoan(target, customMoaning);
+
+        if (user == target)
+            return;
+
+        _arousal.AddArousal(user, interaction.UserArouse * customArousal / 100);
+        ProccessMoan(user, customMoaning);
     }
 
     private void ProccessMoan(EntityUid uid, float customMoaning)
@@ -142,6 +145,7 @@ public sealed partial class ErpPanelSystem : EntitySystem
             return;
 
         var userMoanChance = userArousal.LastValue / userArousal.MaxArousal * customMoaning / 100f;
+        userMoanChance = Math.Clamp(userMoanChance, 0f, 1f);
 
         if (_random.Prob(userMoanChance))
             MoanWithGender(uid, userHumanoid.Gender, userArousal.LastValue / userArousal.MaxArousal);
