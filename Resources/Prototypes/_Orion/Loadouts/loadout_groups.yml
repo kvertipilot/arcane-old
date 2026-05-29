@@ -180,7 +180,6 @@
   - PantiesAlt
   - Thong
   - ThongBabydoll
-   # Arcane-start
   - pantiesSpiderman
   - boxerwolf
   - boxerelephant
@@ -191,7 +190,6 @@
   - boxerelephant
   - boxerfrance
   - boxermaidwithsuspenders
-  # Arcane-end
 
 - type: loadoutGroup
   id: Socks
