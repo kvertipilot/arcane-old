@@ -31,7 +31,7 @@ public sealed partial class ErpPanelWindow : FancyWindow
 
     private HashSet<string> _openedCategories = new();
     private TimeSpan _lastInteractionUpdate = TimeSpan.Zero;
-    private static readonly TimeSpan ReloadCooldown = TimeSpan.FromMilliseconds(150);
+    private static readonly TimeSpan ReloadCooldown = TimeSpan.FromMilliseconds(80);
     private TimeSpan _lastArousalUpdate = TimeSpan.Zero;
     private static readonly TimeSpan ArousalUpdateCooldown = TimeSpan.FromMilliseconds(50);
 

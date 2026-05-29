@@ -3,11 +3,13 @@ using Content.Server.Interaction;
 using Content.Shared._Arcane.ERP;
 using Content.Shared._Arcane.ErpPanel;
 using Content.Shared.Chat;
+using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Verbs;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -28,6 +30,11 @@ public sealed partial class ErpPanelSystem : EntitySystem
     [Dependency] private readonly TransformSystem _transform = default!;
 
     private EntProtoId _heartsProto = new("EffectHearts");
+    private Dictionary<Gender, ProtoId<SoundCollectionPrototype>> _moanSounds = new()
+    {
+        { Gender.Male, new ProtoId<SoundCollectionPrototype>("MoansMale") },
+        { Gender.Female, new ProtoId<SoundCollectionPrototype>("MoansFemale") },
+    };
 
     public override void Initialize()
     {
@@ -67,7 +74,7 @@ public sealed partial class ErpPanelSystem : EntitySystem
                 userPanel.Target = args.Target;
             },
             Text = Loc.GetString("erp-panel-open-verb"),
-            Icon = new SpriteSpecifier.Rsi(new("Mobs/Silicon/station_ai.rsi"), "default"),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/_Arcane/Interface/heartIcon.png")),
             Disabled = !_interaction.InRangeAndAccessible(args.User, args.Target),
             Priority = 2
         };
@@ -119,13 +126,64 @@ public sealed partial class ErpPanelSystem : EntitySystem
         userPanel.Cooldowns[interaction.ID] = _ticking.CurTime;
         Dirty(user, userPanel);
 
+        ProccessMessages(user, target, interaction);
+        ProccessSounds(user, interaction);
+
+        ProccessMoan(user, customMoaning);
+        ProccessMoan(target, customMoaning);
+    }
+
+    private void ProccessMoan(EntityUid uid, float customMoaning)
+    {
+        if (!TryComp<ArousalComponent>(uid, out var userArousal) || userArousal.LastValue <= 0 || userArousal.MaxArousal == 0)
+            return;
+
+        if (!TryComp<HumanoidAppearanceComponent>(uid, out var userHumanoid))
+            return;
+
+        var userMoanChance = userArousal.LastValue / userArousal.MaxArousal * customMoaning / 100f;
+
+        if (_random.Prob(userMoanChance))
+            MoanWithGender(uid, userHumanoid.Gender, userArousal.LastValue / userArousal.MaxArousal);
+    }
+
+    private void MoanWithGender(EntityUid uid, Gender userHumanoid, float arousalPercent)
+    {
+        var collection = _moanSounds.GetValueOrDefault(userHumanoid, _moanSounds[Gender.Female]);
+
+        if (!_prototype.TryIndex(collection, out var soundCollection))
+            return;
+
+        if (soundCollection.PickFiles.Count == 0)
+            return;
+
+        arousalPercent = Math.Clamp(arousalPercent, 0f, 1f);
+        var index = (int) Math.Ceiling(arousalPercent * soundCollection.PickFiles.Count) - 1; // WTF??????
+        index += _random.Next(-2, 1);
+        index = Math.Clamp(index, 0, soundCollection.PickFiles.Count - 1);
+        Logger.Debug($"{index} - {ToPrettyString(uid)}");
+        var audioParams = new AudioParams()
+        {
+            Variation = 0.125f,
+            MaxDistance = 4f,
+        };
+        _audio.PlayPvs(new ResolvedCollectionSpecifier(collection, index), uid, audioParams);
+
+        _chat.TrySendInGameICMessage(uid, Loc.GetString("moan-message"), InGameICChatType.Emote, true);
+    }
+
+    private void ProccessMessages(EntityUid user, EntityUid target, PanelInteractionPrototype interaction)
+    {
         var messagesCollection = user == target ? interaction.SelfMessages : interaction.Messages;
 
         var message = _random.Pick(messagesCollection)
             .Replace("$target", Identity.Name(target, EntityManager, user));
 
         _chat.TrySendInGameICMessage(user, message, InGameICChatType.Emote, false);
+    }
 
+    private void ProccessSounds(EntityUid user, PanelInteractionPrototype interaction)
+    {
         if (interaction.Sounds.Count == 0)
             return;
 
