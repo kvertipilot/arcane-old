@@ -1,9 +1,10 @@
 - type: vendingMachineInventory
-  id: ClothesMateInventory
+  id: LoveMateInventory
   startingInventory:
     ClothingJumpsuitBDSMress: 3
     ClothingJumpsuitBlackShirt: 3
     ClothingJumpsuitWhiteShirt: 3
+    ClothingHandsBDSMgloves: 3
     Whip: 3
     BlowGreen: 3
     BlowPink: 3
@@ -23,4 +24,4 @@
     PussyVulpaBlue: 3
     PussyVulpaPink: 3
     PussyVulpaRed: 3
-    Condom: 3
+    Condom: 10
