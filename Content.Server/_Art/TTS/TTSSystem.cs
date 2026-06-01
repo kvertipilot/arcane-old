@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server._EinsteinEngines.Language;
 using Content.Server.Chat.Systems;
+using Content.Server.Radio.EntitySystems;
 using Content.Shared._EinsteinEngines.Language;
 using Content.Shared._EinsteinEngines.Language.Components;
 using Content.Shared._Art.CVars;
@@ -30,7 +31,7 @@ public sealed partial class TTSSystem : EntitySystem
     {
         _cfg.OnValueChanged(ArtCVars.TTSEnabled, v => _isEnabled = v, true);
 
-        SubscribeLocalEvent<TTSComponent, EntitySpokeEvent>(OnEntitySpoke);
+        SubscribeLocalEvent<TTSComponent, EntitySpokeEvent>(OnEntitySpoke, after: [typeof(RadioSystem), typeof(HeadsetSystem)]); // Orion-Edit
 
         SubscribeLocalEvent<TransformSpeechEvent>(OnTransformSpeech);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => _ttsManager.ResetCache());
@@ -42,6 +43,9 @@ public sealed partial class TTSSystem : EntitySystem
     private async void OnEntitySpoke(EntityUid uid, TTSComponent component, EntitySpokeEvent args)
     {
         if (!_isEnabled || args.Message.Length > MaxMessageChars)
+            return;
+
+        if (args.RadioMessageSent)
             return;
 
         if (!args.Language.SpeechOverride.RequireSpeech)

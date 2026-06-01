@@ -15,6 +15,7 @@
 // SPDX-License-Identifier: MIT
 
 using Content.Server._EinsteinEngines.Language;
+using Content.Server._Art.TTS; // Orion-Edit
 using Content.Server.Chat.Systems;
 using Content.Server.Emp;
 using Content.Server.Radio.Components;
@@ -48,7 +49,7 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
 
         //        SubscribeLocalEvent<WearingHeadsetComponent, EntitySpokeEvent>(OnSpeak); // Orion-Edit: Removed
         // Orion-Start
-        SubscribeLocalEvent<ActorComponent, EntitySpokeEvent>(OnEntitySpoke);
+        SubscribeLocalEvent<ActorComponent, EntitySpokeEvent>(OnEntitySpoke, before: [typeof(TTSSystem)]); // Orion-Edit
         SubscribeLocalEvent<InventoryComponent, ExaminedEvent>(OnInventoryExamined);
         // Orion-End
         SubscribeLocalEvent<HeadsetComponent, RadioReceiveAttemptEvent>(OnHeadsetReceiveAttempt); // Goobstation - Whitelisted radio channel
@@ -178,14 +179,19 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
             if (!_whitelist.IsWhitelistPassOrNull(args.Channel.SendWhitelist, uid))
                 continue;
 
-            _radio.SendRadioMessage(
+            // Orion-Edit-Start
+            if (_radio.SendRadioMessage(
                 uid,
                 args.Message,
                 args.Channel,
                 headsetEntity.Value
-            );
+            ))
+            {
+                args.RadioMessageSent = true;
+                args.Channel = null;
+            }
+            // Orion-Edit-End
 
-            args.Channel = null;
             break;
         }
     }
@@ -244,7 +250,7 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
             };
 
             // Orion-Edit-Start
-            if (args.Voice is { } voice)
+            if (canUnderstand && args.Voice is { } voice)
             {
                 var ev = new TTSRadioPlayEvent(args.OriginalChatMsg, args.OriginalChatMsg.Message, args.Language, voice);
                 RaiseLocalEvent(parent, ev);
