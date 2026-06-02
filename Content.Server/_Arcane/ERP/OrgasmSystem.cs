@@ -25,9 +25,9 @@ public sealed class OrgasmSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
 
-    private static readonly EntProtoId HeartsProto = new("EffectHearts");
-    private static readonly EntProtoId SemenPuddleProto = new("PuddleSemen");
-    private static readonly ProtoId<LocalizedDatasetPrototype> OrgasmMessagesDataset = new("OrgasmMessages");
+    private static readonly EntProtoId HeartsProto = "EffectHearts";
+    private static readonly EntProtoId SemenPuddleProto = "PuddleSemen";
+    private static readonly ProtoId<LocalizedDatasetPrototype> OrgasmMessagesDataset = "OrgasmMessages";
 
     public override void Initialize()
     {
