@@ -58,7 +58,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (!args.CanReach
                 // Arcane-start
-                || !_solutionContainerSystem.TryGetRefillableSolution(entity.Owner, out var solution)
+                || !_solutionContainerSystem.TryGetRefillableSolution(entity.Owner, out _, out var solution)
                 || args.Target == null
                 || !HasComp<BloodstreamComponent>(args.Target.Value)
                 || (args.Target != args.User && _ingestion.HasMouthAvailable(args.Target.Value, args.User))
