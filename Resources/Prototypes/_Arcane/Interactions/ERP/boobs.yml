@@ -27,6 +27,9 @@
   name: Погладить по груди
   userArouse: 5
   range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/friction1.ogg
+  - /Audio/_Arcane/Interactions/friction2.ogg
   messages:
   - гладит $target по груди.
   - гладит грудь $target.
@@ -73,6 +76,9 @@
   name: Сжать грудь
   userArouse: 5
   range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/pat1.ogg
+  - /Audio/_Arcane/Interactions/pat2.ogg
   messages:
   - с силой сжимает грудь $target!
   - жамкает грудь $target.
@@ -118,6 +124,9 @@
   name: Ласкать грудь хвостом
   targetArouse: 5
   range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/friction1.ogg
+  - /Audio/_Arcane/Interactions/friction2.ogg
   messages:
   - проводит хвостиком по груди $target.
   - водит хвостом по груди $target.
@@ -146,6 +155,9 @@
   userArouse: 5
   targetArouse: 5
   range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/pat1.ogg
+  - /Audio/_Arcane/Interactions/pat2.ogg
   messages:
   - массирует грудь $target.
   - водит пальцами по груди $target.

@@ -5,6 +5,9 @@
   userArouse: 10
   targetArouse: 5
   range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/friction1.ogg
+  - /Audio/_Arcane/Interactions/friction2.ogg
   messages:
   - водит пенисом по попке $target.
   - проводит членом по булкам $target.

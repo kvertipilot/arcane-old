@@ -3,6 +3,8 @@
   category: Friendship
   name: Пожать руку
   range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/handshake.ogg
   messages:
   - пожимает руку $target.
   - дружески жмёт руку $target.
@@ -16,6 +18,9 @@
   category: Friendship
   name: Массировать спину
   range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/pat1.ogg
+  - /Audio/_Arcane/Interactions/pat2.ogg
   messages:
   - тыкает спину $target вдоль позвоночника.
   - мнёт лопатки $target.
@@ -32,6 +37,9 @@
   category: Friendship
   name: Погладить хвост
   range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/friction1.ogg
+  - /Audio/_Arcane/Interactions/friction2.ogg
   messages:
   - проводит рукой по хвосту $target.
   - поглаживает хвост $target.
@@ -56,6 +64,9 @@
   category: Friendship
   name: Сплестись хвостами
   range: 1
+  sounds:
+  - /Audio/_Arcane/Interactions/friction1.ogg
+  - /Audio/_Arcane/Interactions/friction2.ogg
   messages:
   - сплетается хвостиками с $target.
   - обвивает хвост $target своим.
