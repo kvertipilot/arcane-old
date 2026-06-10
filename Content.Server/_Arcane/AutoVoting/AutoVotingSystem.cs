@@ -1,12 +1,15 @@
 using Content.Server.Voting.Managers;
 using Content.Shared.GameTicking;
 using Content.Shared.Voting;
+using Robust.Server.Player;
+using System.Linq;
 
 namespace Content.Server._Arcane.AutoVoting;
 
 public sealed partial class AutoVotingSystem : EntitySystem
 {
     [Dependency] private readonly IVoteManager _voteManager = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     public override void Initialize()
     {
@@ -16,7 +19,16 @@ public sealed partial class AutoVotingSystem : EntitySystem
 
     private void OnRoundEnd(RoundRestartCleanupEvent args)
     {
+        if (!HasRealSessionChannels())
+            return;
+
         _voteManager.CreateStandardVote(null, StandardVoteType.Preset);
         _voteManager.CreateStandardVote(null, StandardVoteType.Map);
+    }
+
+    private bool HasRealSessionChannels()
+    {
+        return _playerManager.Sessions.Any(session =>
+            session.Channel?.GetType().Name != "DummyChannel"); // Чтобы не ронялись тесты
     }
 }
