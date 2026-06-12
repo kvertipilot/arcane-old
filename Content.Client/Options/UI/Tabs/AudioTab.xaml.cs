@@ -108,6 +108,12 @@ public sealed partial class AudioTab : Control
             SliderVolumeTTS,
             scale: ContentAudioSystem.TTSMultiplier);
         // Art-TTS End
+        // Orion-Start
+        Control.AddOptionPercentSlider(
+            CCVars.RadioVolume,
+            SliderVolumeRadio,
+            scale: ContentAudioSystem.RadioMultiplier);
+        // Orion-End
 
         Control.AddOptionPercentSlider(
             CVars.MidiVolume,
