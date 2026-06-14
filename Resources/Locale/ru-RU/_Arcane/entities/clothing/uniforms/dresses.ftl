@@ -1,4 +1,4 @@
-﻿ent-ClothingUniformDressesWithFlowers = платья с цветами
+ent-ClothingUniformDressesWithFlowers = платья с цветами
     .desc = Чёрное платье с яркими цветами. Чего-то явно не хватает.
 
 ent-ClothingUniformJumpskirtMaidBlue = синее платье горничной
