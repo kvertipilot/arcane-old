@@ -6,6 +6,12 @@ namespace Content.Shared._Arcane.CCVars;
 public sealed partial class ACCVars
 {
     /// <summary>
+    /// Включены ли автоматические голосования в конце раунда.
+    /// </summary>
+    public static readonly CVarDef<bool> AutoVotingEnabled =
+        CVarDef.Create("vote.auto_voting_enabled", false, CVar.SERVERONLY | CVar.ARCHIVE);
+
+    /// <summary>
     /// Должен ли клиент использовать ТТС вместо барков.
     /// </summary>
     public static readonly CVarDef<bool> UseTTS =
