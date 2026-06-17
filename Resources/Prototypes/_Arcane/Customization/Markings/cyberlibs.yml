@@ -10,8 +10,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/bishop.rsi
-      state: r_arm
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/bishop.rsi
+    state: r_arm
 
 - type: marking
   id: CyberlimbLArmBishop
@@ -24,8 +24,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/bishop.rsi
-      state: l_arm
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/bishop.rsi
+    state: l_arm
 
 - type: marking
   id: CyberlimbRHandBishop
@@ -38,8 +38,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/bishop.rsi
-      state: r_hand
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/bishop.rsi
+    state: r_hand
 
 - type: marking
   id: CyberlimbLHandBishop
@@ -52,8 +52,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/bishop.rsi
-      state: l_hand
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/bishop.rsi
+    state: l_hand
 
 - type: marking
   id: CyberlimbRLegBishop
@@ -66,8 +66,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/bishop.rsi
-      state: r_leg
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/bishop.rsi
+    state: r_leg
 
 - type: marking
   id: CyberlimbLLegBishop
@@ -80,8 +80,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/bishop.rsi
-      state: l_leg
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/bishop.rsi
+    state: l_leg
 
 - type: marking
   id: CyberlimbLFootBishop
@@ -94,8 +94,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/bishop.rsi
-      state: l_foot
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/bishop.rsi
+    state: l_foot
 
 - type: marking
   id: CyberlimbRFootBishop
@@ -108,8 +108,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/bishop.rsi
-      state: r_foot
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/bishop.rsi
+    state: r_foot
 
 - type: marking
   id: CyberlimbTorsoBishop
@@ -122,8 +122,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/bishop.rsi
-      state: torso
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/bishop.rsi
+    state: torso
 
 # Hephaestus
 - type: marking
@@ -137,8 +137,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus.rsi
-      state: r_arm
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus.rsi
+    state: r_arm
 
 - type: marking
   id: CyberlimbLArmHephaestus
@@ -151,8 +151,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus.rsi
-      state: l_arm
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus.rsi
+    state: l_arm
 
 - type: marking
   id: CyberlimbRHandHephaestus
@@ -165,8 +165,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus.rsi
-      state: r_hand
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus.rsi
+    state: r_hand
 
 - type: marking
   id: CyberlimbLHandHephaestus
@@ -179,8 +179,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus.rsi
-      state: l_hand
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus.rsi
+    state: l_hand
 
 - type: marking
   id: CyberlimbRLegHephaestus
@@ -193,8 +193,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus.rsi
-      state: r_leg
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus.rsi
+    state: r_leg
 
 - type: marking
   id: CyberlimbLLegHephaestus
@@ -207,8 +207,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus.rsi
-      state: l_leg
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus.rsi
+    state: l_leg
 
 - type: marking
   id: CyberlimbLFootHephaestus
@@ -221,8 +221,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus.rsi
-      state: l_foot
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus.rsi
+    state: l_foot
 
 - type: marking
   id: CyberlimbRFootHephaestus
@@ -235,8 +235,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus.rsi
-      state: r_foot
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus.rsi
+    state: r_foot
 
 - type: marking
   id: CyberlimbTorsoHephaestus
@@ -249,8 +249,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus.rsi
-      state: torso
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus.rsi
+    state: torso
 
 # Hephaestus Titan
 - type: marking
@@ -264,8 +264,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus_titan.rsi
-      state: r_arm
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus_titan.rsi
+    state: r_arm
 
 - type: marking
   id: CyberlimbLArmHephaestusTitan
@@ -278,8 +278,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus_titan.rsi
-      state: l_arm
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus_titan.rsi
+    state: l_arm
 
 - type: marking
   id: CyberlimbRHandHephaestusTitan
@@ -292,8 +292,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus_titan.rsi
-      state: r_hand
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus_titan.rsi
+    state: r_hand
 
 - type: marking
   id: CyberlimbLHandHephaestusTitan
@@ -306,8 +306,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus_titan.rsi
-      state: l_hand
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus_titan.rsi
+    state: l_hand
 
 - type: marking
   id: CyberlimbRLegHephaestusTitan
@@ -320,8 +320,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus_titan.rsi
-      state: r_leg
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus_titan.rsi
+    state: r_leg
 
 - type: marking
   id: CyberlimbLLegHephaestusTitan
@@ -334,8 +334,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus_titan.rsi
-      state: l_leg
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus_titan.rsi
+    state: l_leg
 
 - type: marking
   id: CyberlimbLFootHephaestusTitan
@@ -348,8 +348,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus_titan.rsi
-      state: l_foot
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus_titan.rsi
+    state: l_foot
 
 - type: marking
   id: CyberlimbRFootHephaestusTitan
@@ -362,8 +362,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus_titan.rsi
-      state: r_foot
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus_titan.rsi
+    state: r_foot
 
 - type: marking
   id: CyberlimbTorsoHephaestusTitan
@@ -376,8 +376,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus_titan.rsi
-      state: torso
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/hephaestus_titan.rsi
+    state: torso
 
 # Morpheus
 - type: marking
@@ -391,8 +391,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/morpheus.rsi
-      state: r_arm
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/morpheus.rsi
+    state: r_arm
 
 - type: marking
   id: CyberlimbLArmMorpheus
@@ -405,8 +405,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/morpheus.rsi
-      state: l_arm
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/morpheus.rsi
+    state: l_arm
 
 - type: marking
   id: CyberlimbRHandMorpheus
@@ -419,8 +419,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/morpheus.rsi
-      state: r_hand
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/morpheus.rsi
+    state: r_hand
 
 - type: marking
   id: CyberlimbLHandMorpheus
@@ -433,8 +433,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/morpheus.rsi
-      state: l_hand
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/morpheus.rsi
+    state: l_hand
 
 - type: marking
   id: CyberlimbRLegMorpheus
@@ -447,8 +447,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/morpheus.rsi
-      state: r_leg
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/morpheus.rsi
+    state: r_leg
 
 - type: marking
   id: CyberlimbLLegMorpheus
@@ -461,8 +461,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/morpheus.rsi
-      state: l_leg
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/morpheus.rsi
+    state: l_leg
 
 - type: marking
   id: CyberlimbLFootMorpheus
@@ -475,8 +475,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/morpheus.rsi
-      state: l_foot
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/morpheus.rsi
+    state: l_foot
 
 - type: marking
   id: CyberlimbRFootMorpheus
@@ -489,8 +489,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/morpheus.rsi
-      state: r_foot
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/morpheus.rsi
+    state: r_foot
 
 - type: marking
   id: CyberlimbTorsoMorpheus
@@ -503,8 +503,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/morpheus.rsi
-      state: torso
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/morpheus.rsi
+    state: torso
 
 
 # Wardtakahashi
@@ -519,8 +519,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/wardtakahashi.rsi
-      state: r_arm
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/wardtakahashi.rsi
+    state: r_arm
 
 - type: marking
   id: CyberlimbLArmWardtakahashi
@@ -533,8 +533,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/wardtakahashi.rsi
-      state: l_arm
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/wardtakahashi.rsi
+    state: l_arm
 
 - type: marking
   id: CyberlimbRHandWardtakahashi
@@ -547,8 +547,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/wardtakahashi.rsi
-      state: r_hand
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/wardtakahashi.rsi
+    state: r_hand
 
 - type: marking
   id: CyberlimbLHandWardtakahashi
@@ -561,8 +561,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/wardtakahashi.rsi
-      state: l_hand
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/wardtakahashi.rsi
+    state: l_hand
 
 - type: marking
   id: CyberlimbRLegWardtakahashi
@@ -575,8 +575,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/wardtakahashi.rsi
-      state: r_leg
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/wardtakahashi.rsi
+    state: r_leg
 
 - type: marking
   id: CyberlimbLLegWardtakahashi
@@ -589,8 +589,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/wardtakahashi.rsi
-      state: l_leg
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/wardtakahashi.rsi
+    state: l_leg
 
 - type: marking
   id: CyberlimbLFootWardtakahashi
@@ -603,8 +603,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/wardtakahashi.rsi
-      state: l_foot
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/wardtakahashi.rsi
+    state: l_foot
 
 - type: marking
   id: CyberlimbRFootWardtakahashi
@@ -617,8 +617,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/wardtakahashi.rsi
-      state: r_foot
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/wardtakahashi.rsi
+    state: r_foot
 
 - type: marking
   id: CyberlimbTorsoWardtakahashiMale
@@ -632,8 +632,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/wardtakahashi.rsi
-      state: torso_m
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/wardtakahashi.rsi
+    state: torso_m
 
 - type: marking
   id: CyberlimbTorsoWardtakahashiFemale
@@ -647,8 +647,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/wardtakahashi.rsi
-      state: torso_f
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/wardtakahashi.rsi
+    state: torso_f
 
 # Zenghu
 - type: marking
@@ -662,8 +662,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/zenghu.rsi
-      state: r_arm
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/zenghu.rsi
+    state: r_arm
 
 - type: marking
   id: CyberlimbLArmZenghu
@@ -676,8 +676,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/zenghu.rsi
-      state: l_arm
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/zenghu.rsi
+    state: l_arm
 
 - type: marking
   id: CyberlimbRHandZenghu
@@ -690,8 +690,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/zenghu.rsi
-      state: r_hand
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/zenghu.rsi
+    state: r_hand
 
 - type: marking
   id: CyberlimbLHandZenghu
@@ -704,8 +704,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/zenghu.rsi
-      state: l_hand
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/zenghu.rsi
+    state: l_hand
 
 - type: marking
   id: CyberlimbRLegZenghu
@@ -718,8 +718,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/zenghu.rsi
-      state: r_leg
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/zenghu.rsi
+    state: r_leg
 
 - type: marking
   id: CyberlimbLLegZenghu
@@ -732,8 +732,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/zenghu.rsi
-      state: l_leg
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/zenghu.rsi
+    state: l_leg
 
 - type: marking
   id: CyberlimbLFootZenghu
@@ -746,8 +746,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/zenghu.rsi
-      state: l_foot
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/zenghu.rsi
+    state: l_foot
 
 - type: marking
   id: CyberlimbRFootZenghu
@@ -760,8 +760,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/zenghu.rsi
-      state: r_foot
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/zenghu.rsi
+    state: r_foot
 
 - type: marking
   id: CyberlimbTorsoZenghu
@@ -774,8 +774,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/zenghu.rsi
-      state: torso
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/zenghu.rsi
+    state: torso
 
 # Nanotrasen
 - type: marking
@@ -789,8 +789,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/nanotrasen.rsi
-      state: r_arm
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/nanotrasen.rsi
+    state: r_arm
 
 - type: marking
   id: CyberlimbLArmNanotrasen
@@ -803,8 +803,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/nanotrasen.rsi
-      state: l_arm
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/nanotrasen.rsi
+    state: l_arm
 
 - type: marking
   id: CyberlimbRHandNanotrasen
@@ -817,8 +817,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/nanotrasen.rsi
-      state: r_hand
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/nanotrasen.rsi
+    state: r_hand
 
 - type: marking
   id: CyberlimbLHandNanotrasen
@@ -831,8 +831,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/nanotrasen.rsi
-      state: l_hand
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/nanotrasen.rsi
+    state: l_hand
 
 - type: marking
   id: CyberlimbRLegNanotrasen
@@ -845,8 +845,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/nanotrasen.rsi
-      state: r_leg
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/nanotrasen.rsi
+    state: r_leg
 
 - type: marking
   id: CyberlimbLLegNanotrasen
@@ -859,8 +859,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/nanotrasen.rsi
-      state: l_leg
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/nanotrasen.rsi
+    state: l_leg
 
 - type: marking
   id: CyberlimbLFootNanotrasen
@@ -873,8 +873,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/nanotrasen.rsi
-      state: l_foot
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/nanotrasen.rsi
+    state: l_foot
 
 - type: marking
   id: CyberlimbRFootNanotrasen
@@ -887,8 +887,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/nanotrasen.rsi
-      state: r_foot
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/nanotrasen.rsi
+    state: r_foot
 
 - type: marking
   id: CyberlimbTorsoNanotrasen
@@ -901,8 +901,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/nanotrasen.rsi
-      state: torso
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/nanotrasen.rsi
+    state: torso
 
 # Xion
 - type: marking
@@ -916,8 +916,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/xion.rsi
-      state: r_arm
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/xion.rsi
+    state: r_arm
 
 - type: marking
   id: CyberlimbLArmXion
@@ -930,8 +930,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/xion.rsi
-      state: l_arm
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/xion.rsi
+    state: l_arm
 
 - type: marking
   id: CyberlimbRHandXion
@@ -944,8 +944,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/xion.rsi
-      state: r_hand
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/xion.rsi
+    state: r_hand
 
 - type: marking
   id: CyberlimbLHandXion
@@ -958,8 +958,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/xion.rsi
-      state: l_hand
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/xion.rsi
+    state: l_hand
 
 - type: marking
   id: CyberlimbRLegXion
@@ -972,8 +972,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/xion.rsi
-      state: r_leg
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/xion.rsi
+    state: r_leg
 
 - type: marking
   id: CyberlimbLLegXion
@@ -986,8 +986,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/xion.rsi
-      state: l_leg
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/xion.rsi
+    state: l_leg
 
 - type: marking
   id: CyberlimbLFootXion
@@ -1000,8 +1000,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/xion.rsi
-      state: l_foot
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/xion.rsi
+    state: l_foot
 
 - type: marking
   id: CyberlimbRFootXion
@@ -1014,8 +1014,8 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/xion.rsi
-      state: r_foot
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/xion.rsi
+    state: r_foot
 
 - type: marking
   id: CyberlimbTorsoXion
@@ -1028,5 +1028,5 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-    - sprite: _Arcane/Mobs/Customization/Cyberlimbs/xion.rsi
-      state: torso
+  - sprite: _Arcane/Mobs/Customization/Cyberlimbs/xion.rsi
+    state: torso
