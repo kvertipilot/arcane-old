@@ -47,5 +47,16 @@ public sealed class CatNatureSystem : EntitySystem
     {
         // При удалении компача
         _tagSystem.RemoveTag(uid, "FelinidEmotes");
+
+        if (TryComp<VocalComponent>(uid, out var vocal))
+        {
+            if (component.OriginalSounds != null)
+                vocal.Sounds = component.OriginalSounds;
+
+            if (component.OriginalEmoteSounds != null)
+                vocal.EmoteSounds = component.OriginalEmoteSounds;
+
+            Dirty(uid, vocal);
+        }
     }
 }
