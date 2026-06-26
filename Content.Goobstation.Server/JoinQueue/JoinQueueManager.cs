@@ -77,6 +77,7 @@ public sealed class JoinQueueManager : IJoinQueueManager
     public int PlayerInQueueCount => _queue.Count + _patronQueue.Count;
     public int ActualPlayersCount => _player.PlayerCount - PlayerInQueueCount;
 
+    private readonly HashSet<NetUserId> _bypassUsers = new(); // Arcane
 
     public void Initialize()
     {
@@ -126,6 +127,11 @@ public sealed class JoinQueueManager : IJoinQueueManager
             var wasInPatronQueue = _patronQueue.Remove(e.Session);
             var wasInQueue = !wasInPatronQueue && _queue.Remove(e.Session);
 
+            // Arcane-start
+            if (e.OldStatus == SessionStatus.InGame)
+                _bypassUsers.Remove(e.Session.UserId);
+            // Arcane-end
+
             if (wasInPatronQueue || wasInQueue)
             {
                 var graceSeconds = _configuration.GetCVar(GoobCVars.QueueReconnectGraceSeconds);
@@ -159,7 +165,7 @@ public sealed class JoinQueueManager : IJoinQueueManager
 
         var isPrivileged = await _connection.HasPrivilegedJoin(session.UserId);
         var isPatron = _linkAccount.GetPatron(session)?.Tier != null;
-        var currentOnline = _player.PlayerCount - 1;
+        var currentOnline = _player.PlayerCount - 1 - _bypassUsers.Count; // Arcane
         var haveFreeSlot = currentOnline < _configuration.GetCVar(CCVars.SoftMaxPlayers);
         if (isPrivileged || haveFreeSlot)
         {
@@ -167,7 +173,10 @@ public sealed class JoinQueueManager : IJoinQueueManager
             _reservations.Remove(session.UserId);
 
             if (isPrivileged && !haveFreeSlot)
+            {
+                _bypassUsers.Add(session.UserId); // Arcane
                 QueueBypassCount.Inc();
+            }
 
             return;
         }
