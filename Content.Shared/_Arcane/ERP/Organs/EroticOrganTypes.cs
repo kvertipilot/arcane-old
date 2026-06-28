@@ -1,4 +1,4 @@
-﻿namespace Content.Shared._Arcane.ERP.Organs;
+namespace Content.Shared._Arcane.ERP.Organs;
 
 // Marker components — each is a tag for interaction condition checks.
 // All sexes

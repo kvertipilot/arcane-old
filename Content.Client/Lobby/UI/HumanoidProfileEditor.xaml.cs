@@ -357,11 +357,11 @@ namespace Content.Client.Lobby.UI
 
             SaveButton.OnPressed += args =>
             {
-                // Arcane-Start
+                Save?.Invoke();
+                // Arcane-Start: save ERP prefs after profile so server normalization sees the updated species/sex
                 if (CharacterSlot != null)
                     IoCManager.Resolve<ClientErpOrganPreferencesManager>().SaveSlot(CharacterSlot.Value, _erpOrganPrefs);
                 // Arcane-End
-                Save?.Invoke();
             };
 
             #region Left
