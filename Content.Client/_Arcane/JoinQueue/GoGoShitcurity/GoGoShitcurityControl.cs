@@ -3,7 +3,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
-using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Graphics.RSI;
 using Robust.Shared.Timing;
@@ -12,9 +11,8 @@ using System.Numerics;
 
 namespace Content.Client._Arcane.JoinQueue.GoGoShitcurity;
 
-public sealed class GoGoShitcurityControl : Control, IQueueMiniGameScoreSource
+public sealed class GoGoShitcurityControl : QueueMiniGameControl
 {
-    [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly IResourceCache _cache = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -24,18 +22,11 @@ public sealed class GoGoShitcurityControl : Control, IQueueMiniGameScoreSource
     private Font _fontBig = default!;
     private SpriteSystem _sprites = default!;
 
-    private bool _wasSpace;
-    private bool _started;
-    private bool _reportedFinalScore;
+    public override int Score => _game.Score;
+    public override int Lives => _game.Lives;
+    public override int Wave => _game.WaveNumber;
 
-    public event Action<int>? ScoreChanged;
-    public event Action? BulletFired;
-    public event Action? EnemyKilled;
-    public event Action<bool>? GameEnded;
-
-    public int Score => _game.Score;
-    public int Lives => _game.Lives;
-    public int Wave => _game.WaveNumber;
+    protected override bool IsGameFinished => _game.GameOver || _game.Victory;
 
     // Player sprite
     private Texture _spacepodTexture = default!;
@@ -69,14 +60,14 @@ public sealed class GoGoShitcurityControl : Control, IQueueMiniGameScoreSource
 
         LoadSprites();
 
-        _game.OnShoot = () => BulletFired?.Invoke();
+        _game.OnShoot = RaiseBulletFired;
         _game.OnEnemyKilled = (x, y) =>
         {
             QueueMiniGameDrawHelpers.AddBurst(_particles, x, y, new Color(255, 215, 85));
-            EnemyKilled?.Invoke();
+            RaiseEnemyKilled();
         };
-        _game.OnGameOver = () => GameEnded?.Invoke(false);
-        _game.OnVictory = () => GameEnded?.Invoke(true);
+        _game.OnGameOver = () => RaiseGameEnded(false);
+        _game.OnVictory = () => RaiseGameEnded(true);
 
         var rng = new Random(42);
         _stars = new (float, float, float, float)[60];
@@ -105,57 +96,30 @@ public sealed class GoGoShitcurityControl : Control, IQueueMiniGameScoreSource
         return _sprites.RsiStateLike(spec);
     }
 
-    protected override void FrameUpdate(FrameEventArgs args)
+    protected override void ResetGame()
     {
-        base.FrameUpdate(args);
-
-        if (!VisibleInTree)
-            return;
-
-        var space = _input.IsKeyDown(Keyboard.Key.Space);
-        var left = _input.IsKeyDown(Keyboard.Key.Left) || _input.IsKeyDown(Keyboard.Key.A);
-        var right = _input.IsKeyDown(Keyboard.Key.Right) || _input.IsKeyDown(Keyboard.Key.D);
-        var up = _input.IsKeyDown(Keyboard.Key.Up) || _input.IsKeyDown(Keyboard.Key.W);
-        var down = _input.IsKeyDown(Keyboard.Key.Down) || _input.IsKeyDown(Keyboard.Key.S);
-
-        if (!_started)
-        {
-            if (space && !_wasSpace)
-            {
-                _started = true;
-                _game.Reset();
-                _reportedFinalScore = false;
-            }
-        }
-        else if (_game.GameOver || _game.Victory)
-        {
-            if (space && !_wasSpace)
-            {
-                _game.Reset();
-                _reportedFinalScore = false;
-            }
-        }
-        else
-        {
-            _game.Update(args.DeltaSeconds, left, right, up, down, space);
-            _starScrollX = (_starScrollX + 35f * args.DeltaSeconds) % GoGoShitcurityGame.GameW;
-        }
-
-        if (!_started)
-            _starScrollX = (_starScrollX + 22f * args.DeltaSeconds) % GoGoShitcurityGame.GameW;
-
-        QueueMiniGameDrawHelpers.UpdateParticles(_particles, args.DeltaSeconds);
-        ReportFinalScore();
-        _wasSpace = space;
+        _game.Reset();
     }
 
-    private void ReportFinalScore()
+    protected override void UpdateRunningGame(FrameEventArgs args, bool space)
     {
-        if (_reportedFinalScore || !_game.GameOver && !_game.Victory)
-            return;
+        var left = IsKeyDown(Keyboard.Key.Left) || IsKeyDown(Keyboard.Key.A);
+        var right = IsKeyDown(Keyboard.Key.Right) || IsKeyDown(Keyboard.Key.D);
+        var up = IsKeyDown(Keyboard.Key.Up) || IsKeyDown(Keyboard.Key.W);
+        var down = IsKeyDown(Keyboard.Key.Down) || IsKeyDown(Keyboard.Key.S);
 
-        _reportedFinalScore = true;
-        ScoreChanged?.Invoke(_game.Score);
+        _game.Update(args.DeltaSeconds, left, right, up, down, space);
+        _starScrollX = (_starScrollX + 35f * args.DeltaSeconds) % GoGoShitcurityGame.GameW;
+    }
+
+    protected override void UpdateIdleGame(FrameEventArgs args)
+    {
+        _starScrollX = (_starScrollX + 22f * args.DeltaSeconds) % GoGoShitcurityGame.GameW;
+    }
+
+    protected override void UpdateSharedGame(FrameEventArgs args)
+    {
+        QueueMiniGameDrawHelpers.UpdateParticles(_particles, args.DeltaSeconds);
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -168,7 +132,7 @@ public sealed class GoGoShitcurityControl : Control, IQueueMiniGameScoreSource
         handle.DrawRect(new UIBox2(0, 0, gw, gh), ColorBg);
         DrawStars(handle, gw, gh);
 
-        if (_started)
+        if (Started)
             DrawEntities(handle);
         else
         {
@@ -232,8 +196,8 @@ public sealed class GoGoShitcurityControl : Control, IQueueMiniGameScoreSource
     private void DrawPlayer(DrawingHandleScreen handle)
     {
         var size = GoGoShitcurityGame.PlayerSize;
-        var x = _started ? _game.PlayerX : GoGoShitcurityGame.PlayerStartX;
-        var y = _started ? _game.PlayerY : GoGoShitcurityGame.GameH / 2f - size / 2f;
+        var x = Started ? _game.PlayerX : GoGoShitcurityGame.PlayerStartX;
+        var y = Started ? _game.PlayerY : GoGoShitcurityGame.GameH / 2f - size / 2f;
         var half = size / 2f;
         var cx = x + half;
         var cy = y + half;
@@ -321,7 +285,7 @@ public sealed class GoGoShitcurityControl : Control, IQueueMiniGameScoreSource
 
     private void DrawOverlay(DrawingHandleScreen handle, float gw, float gh)
     {
-        if (!_started)
+        if (!Started)
         {
             QueueMiniGameDrawHelpers.DrawCentered(handle, _fontBig, gw, gh / 2f - 28f,
                 Loc.GetString("queue-minigame-gogo-shitcurity-title"), new Color(255, 200, 50));

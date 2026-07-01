@@ -186,7 +186,7 @@ public sealed class JoinQueueManager : IJoinQueueManager
                 var graceSeconds = _configuration.GetCVar(GoobCVars.QueueReconnectGraceSeconds);
                 if (graceSeconds > 0)
                 {
-                    var accumulatedWaitSeconds = GetQueueWaitSeconds(e.Session, DateTime.UtcNow); // Arcane-edit
+                    var accumulatedWaitSeconds = (float) GetQueueWaitSeconds(e.Session, DateTime.UtcNow); // Arcane-edit
                     _reservations[e.Session.UserId] = new QueueReservation(
                         DateTime.UtcNow,
                         wasInPatronQueue ? oldPatronPosition : oldPosition,
@@ -352,14 +352,14 @@ public sealed class JoinQueueManager : IJoinQueueManager
         {
             UpdateQueueWaitRecord(session, now);
             playerNames.Add(session.Name);
-            playerWaitSeconds.Add(GetQueueWaitSeconds(session, now));
+            playerWaitSeconds.Add((float) GetQueueWaitSeconds(session, now));
         }
 
         foreach (var session in _queue)
         {
             UpdateQueueWaitRecord(session, now);
             playerNames.Add(session.Name);
-            playerWaitSeconds.Add(GetQueueWaitSeconds(session, now));
+            playerWaitSeconds.Add((float) GetQueueWaitSeconds(session, now));
         }
 
         var queueWaitLeaderboard = BuildQueueWaitLeaderboard();

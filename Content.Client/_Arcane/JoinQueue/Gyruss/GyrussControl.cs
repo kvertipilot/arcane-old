@@ -3,7 +3,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
-using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Graphics.RSI;
 using Robust.Shared.Timing;
@@ -12,9 +11,8 @@ using System.Numerics;
 
 namespace Content.Client._Arcane.JoinQueue.Gyruss;
 
-public sealed class GyrussControl : Control, IQueueMiniGameScoreSource
+public sealed class GyrussControl : QueueMiniGameControl
 {
-    [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly IResourceCache _cache = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -28,18 +26,12 @@ public sealed class GyrussControl : Control, IQueueMiniGameScoreSource
     private readonly IRsiStateLike[] _enemySprites = new IRsiStateLike[3];
     private IRsiStateLike _portalSprite = default!;
     private float _portalTime;
-    private bool _wasSpace;
-    private bool _started;
-    private bool _reportedFinalScore;
 
-    public event Action<int>? ScoreChanged;
-    public event Action? BulletFired;
-    public event Action? EnemyKilled;
-    public event Action<bool>? GameEnded;
+    public override int Score => _game.Score;
+    public override int Lives => _game.Lives;
+    public override int Wave => _game.Wave;
 
-    public int Score => _game.Score;
-    public int Lives => _game.Lives;
-    public int Wave => _game.Wave;
+    protected override bool IsGameFinished => _game.GameOver || _game.Victory;
 
     private static readonly Color ColorBg = new(0, 0, 18);
     private static readonly Color ColorBulletPlayer = new(160, 255, 255);
@@ -60,14 +52,14 @@ public sealed class GyrussControl : Control, IQueueMiniGameScoreSource
         _enemySprites[2] = LoadState(QueueMiniGameAssets.SharkminnowRsi, "alive");
         _portalSprite = LoadState(QueueMiniGameAssets.PortalRsi, "portal-artifact");
 
-        _game.OnShoot = () => BulletFired?.Invoke();
+        _game.OnShoot = RaiseBulletFired;
         _game.OnEnemyKilled = (x, y) =>
         {
             QueueMiniGameDrawHelpers.AddBurst(_particles, x, y, new Color(105, 230, 255));
-            EnemyKilled?.Invoke();
+            RaiseEnemyKilled();
         };
-        _game.OnGameOver = () => GameEnded?.Invoke(false);
-        _game.OnVictory = () => GameEnded?.Invoke(true);
+        _game.OnGameOver = () => RaiseGameEnded(false);
+        _game.OnVictory = () => RaiseGameEnded(true);
 
         MinSize = new Vector2(GyrussGame.GameW, GyrussGame.GameH);
         RectClipContent = true;
@@ -87,52 +79,22 @@ public sealed class GyrussControl : Control, IQueueMiniGameScoreSource
         return _sprites.RsiStateLike(spec);
     }
 
-    protected override void FrameUpdate(FrameEventArgs args)
+    protected override void ResetGame()
     {
-        base.FrameUpdate(args);
-
-        if (!VisibleInTree)
-            return;
-
-        var space = _input.IsKeyDown(Keyboard.Key.Space);
-
-        if (!_started)
-        {
-            if (space && !_wasSpace)
-            {
-                _started = true;
-                _game.Reset();
-                _reportedFinalScore = false;
-            }
-        }
-        else if (_game.GameOver || _game.Victory)
-        {
-            if (space && !_wasSpace)
-            {
-                _game.Reset();
-                _reportedFinalScore = false;
-            }
-        }
-        else
-        {
-            var left = _input.IsKeyDown(Keyboard.Key.Left) || _input.IsKeyDown(Keyboard.Key.A);
-            var right = _input.IsKeyDown(Keyboard.Key.Right) || _input.IsKeyDown(Keyboard.Key.D);
-            _game.Update(args.DeltaSeconds, left, right, space);
-        }
-
-        _portalTime += args.DeltaSeconds;
-        QueueMiniGameDrawHelpers.UpdateParticles(_particles, args.DeltaSeconds);
-        ReportFinalScore();
-        _wasSpace = space;
+        _game.Reset();
     }
 
-    private void ReportFinalScore()
+    protected override void UpdateRunningGame(FrameEventArgs args, bool space)
     {
-        if (_reportedFinalScore || !_game.GameOver && !_game.Victory)
-            return;
+        var left = IsKeyDown(Keyboard.Key.Left) || IsKeyDown(Keyboard.Key.A);
+        var right = IsKeyDown(Keyboard.Key.Right) || IsKeyDown(Keyboard.Key.D);
+        _game.Update(args.DeltaSeconds, left, right, space);
+    }
 
-        _reportedFinalScore = true;
-        ScoreChanged?.Invoke(_game.Score);
+    protected override void UpdateSharedGame(FrameEventArgs args)
+    {
+        _portalTime += args.DeltaSeconds;
+        QueueMiniGameDrawHelpers.UpdateParticles(_particles, args.DeltaSeconds);
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -147,7 +109,7 @@ public sealed class GyrussControl : Control, IQueueMiniGameScoreSource
         DrawPortal(handle);
         DrawRing(handle, GyrussGame.PlayerRadius, new Color(55, 80, 120, 35));
 
-        if (_started)
+        if (Started)
         {
             DrawEnemies(handle);
             DrawBullets(handle);
@@ -261,7 +223,7 @@ public sealed class GyrussControl : Control, IQueueMiniGameScoreSource
 
     private void DrawOverlay(DrawingHandleScreen handle, float gw, float gh)
     {
-        if (!_started)
+        if (!Started)
         {
             QueueMiniGameDrawHelpers.DrawCentered(handle, _fontBig, gw, gh / 2f - 28f,
                 Loc.GetString("queue-minigame-gyruss-title"), Color.Cyan);

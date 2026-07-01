@@ -3,7 +3,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
-using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Graphics.RSI;
 using Robust.Shared.Timing;
@@ -12,9 +11,8 @@ using System.Numerics;
 
 namespace Content.Client._Arcane.JoinQueue.SpaceInvaders;
 
-public sealed class SpaceInvadersControl : Control, IQueueMiniGameScoreSource
+public sealed class SpaceInvadersControl : QueueMiniGameControl
 {
-    [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly IResourceCache _cache = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -27,19 +25,13 @@ public sealed class SpaceInvadersControl : Control, IQueueMiniGameScoreSource
     private Texture _spacepodTexture = default!;
     private readonly IRsiStateLike[] _crawlerSprites = new IRsiStateLike[3];
     private IRsiStateLike _coreSprite = default!;
-    private bool _started;
-    private bool _wasSpace;
-    private bool _reportedFinalScore;
     private float _starScroll;
 
-    public event Action<int>? ScoreChanged;
-    public event Action? BulletFired;
-    public event Action? EnemyKilled;
-    public event Action<bool>? GameEnded;
+    public override int Score => _game.Score;
+    public override int Lives => _game.Lives;
+    public override int Wave => _game.Wave;
 
-    public int Score => _game.Score;
-    public int Lives => _game.Lives;
-    public int Wave => _game.Wave;
+    protected override bool IsGameFinished => _game.GameOver || _game.Victory;
 
     private static readonly Color ColorBg = new(4, 3, 18);
     private static readonly Color ColorGround = new(90, 230, 120);
@@ -60,14 +52,14 @@ public sealed class SpaceInvadersControl : Control, IQueueMiniGameScoreSource
         _crawlerSprites[2] = LoadState(QueueMiniGameAssets.SharkminnowRsi, "alive");
         _coreSprite = LoadState(QueueMiniGameAssets.DragonCarpRsi, "alive");
 
-        _game.OnShoot = () => BulletFired?.Invoke();
+        _game.OnShoot = RaiseBulletFired;
         _game.OnEnemyKilled = (x, y) =>
         {
             QueueMiniGameDrawHelpers.AddBurst(_particles, x, y, new Color(120, 255, 150));
-            EnemyKilled?.Invoke();
+            RaiseEnemyKilled();
         };
-        _game.OnGameOver = () => GameEnded?.Invoke(false);
-        _game.OnVictory = () => GameEnded?.Invoke(true);
+        _game.OnGameOver = () => RaiseGameEnded(false);
+        _game.OnVictory = () => RaiseGameEnded(true);
 
         MinSize = new Vector2(SpaceInvadersGame.GameW, SpaceInvadersGame.GameH);
         RectClipContent = true;
@@ -84,55 +76,27 @@ public sealed class SpaceInvadersControl : Control, IQueueMiniGameScoreSource
         }
     }
 
-    protected override void FrameUpdate(FrameEventArgs args)
+    protected override void ResetGame()
     {
-        base.FrameUpdate(args);
-
-        if (!VisibleInTree)
-            return;
-
-        var space = _input.IsKeyDown(Keyboard.Key.Space);
-
-        if (!_started)
-        {
-            if (space && !_wasSpace)
-            {
-                _started = true;
-                _game.Reset();
-                _reportedFinalScore = false;
-            }
-        }
-        else if (_game.GameOver || _game.Victory)
-        {
-            if (space && !_wasSpace)
-            {
-                _game.Reset();
-                _reportedFinalScore = false;
-            }
-        }
-        else
-        {
-            var left = _input.IsKeyDown(Keyboard.Key.Left) || _input.IsKeyDown(Keyboard.Key.A);
-            var right = _input.IsKeyDown(Keyboard.Key.Right) || _input.IsKeyDown(Keyboard.Key.D);
-            _game.Update(args.DeltaSeconds, left, right, space);
-            _starScroll += args.DeltaSeconds;
-        }
-
-        if (!_started)
-            _starScroll += args.DeltaSeconds * 0.55f;
-
-        QueueMiniGameDrawHelpers.UpdateParticles(_particles, args.DeltaSeconds);
-        ReportFinalScore();
-        _wasSpace = space;
+        _game.Reset();
     }
 
-    private void ReportFinalScore()
+    protected override void UpdateRunningGame(FrameEventArgs args, bool space)
     {
-        if (_reportedFinalScore || !_game.GameOver && !_game.Victory)
-            return;
+        var left = IsKeyDown(Keyboard.Key.Left) || IsKeyDown(Keyboard.Key.A);
+        var right = IsKeyDown(Keyboard.Key.Right) || IsKeyDown(Keyboard.Key.D);
+        _game.Update(args.DeltaSeconds, left, right, space);
+        _starScroll += args.DeltaSeconds;
+    }
 
-        _reportedFinalScore = true;
-        ScoreChanged?.Invoke(_game.Score);
+    protected override void UpdateIdleGame(FrameEventArgs args)
+    {
+        _starScroll += args.DeltaSeconds * 0.55f;
+    }
+
+    protected override void UpdateSharedGame(FrameEventArgs args)
+    {
+        QueueMiniGameDrawHelpers.UpdateParticles(_particles, args.DeltaSeconds);
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -146,7 +110,7 @@ public sealed class SpaceInvadersControl : Control, IQueueMiniGameScoreSource
         DrawStars(handle, gw, gh);
         handle.DrawRect(new UIBox2(0, SpaceInvadersGame.GroundY, gw, SpaceInvadersGame.GroundY + 2f), ColorGround);
 
-        if (_started)
+        if (Started)
         {
             DrawCrawlers(handle);
             DrawCore(handle);
@@ -253,7 +217,7 @@ public sealed class SpaceInvadersControl : Control, IQueueMiniGameScoreSource
 
     private void DrawOverlay(DrawingHandleScreen handle, float gw, float gh)
     {
-        if (!_started)
+        if (!Started)
         {
             QueueMiniGameDrawHelpers.DrawCentered(handle, _fontBig, gw, gh / 2f - 26f,
                 Loc.GetString("queue-minigame-space-invaders-title"), new Color(255, 210, 90));
