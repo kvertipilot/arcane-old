@@ -3,7 +3,7 @@ using Content.Server.Connection;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Content.Shared.CCVar;
-using Content.Shared._Arcane.JoinQueue; // Arcane-edit
+using Content.Shared._Arcane.JoinQueue;
 using Content.Goobstation.Shared.JoinQueue;
 using Prometheus;
 using Robust.Server.Player;

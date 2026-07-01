@@ -2,7 +2,6 @@ using System.Numerics;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Graphics.RSI;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
