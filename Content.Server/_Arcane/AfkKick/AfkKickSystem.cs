@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Goobstation.Common.JoinQueue;
 using Content.Server.GameTicking;
 using Content.Shared.Ghost;
 using Robust.Server.Player;
@@ -15,6 +16,7 @@ public sealed class AfkKickSystem : EntitySystem
 
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IJoinQueueManager _joinQueue = default!;
 
     private readonly Dictionary<ICommonSession, TimeSpan> _lobbySince = new();
     private readonly Dictionary<ICommonSession, GhostAfkState> _ghostStates = new();
@@ -62,6 +64,12 @@ public sealed class AfkKickSystem : EntitySystem
         foreach (var session in _playerManager.Sessions)
         {
             if (session.Status == SessionStatus.Disconnected)
+            {
+                ClearSession(session);
+                continue;
+            }
+
+            if (_joinQueue.IsQueued(session.UserId))
             {
                 ClearSession(session);
                 continue;
