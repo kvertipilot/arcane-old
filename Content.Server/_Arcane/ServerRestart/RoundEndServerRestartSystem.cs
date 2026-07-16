@@ -11,7 +11,8 @@ public sealed class RoundEndServerRestartSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private bool _restartOnRoundEnd;
-    private bool _roundStarted;
+    private int _rounds = 0;
+    private int _restartOn = 4;
 
     public override void Initialize()
     {
@@ -30,7 +31,7 @@ public sealed class RoundEndServerRestartSystem : EntitySystem
 
     private void OnRoundStarted(RoundStartedEvent args)
     {
-        _roundStarted = true;
+        _rounds++;
     }
 
     private void OnRoundRestartCleanup(RoundRestartCleanupEvent args)
@@ -38,9 +39,11 @@ public sealed class RoundEndServerRestartSystem : EntitySystem
         if (!_restartOnRoundEnd)
             return;
 
-        if (!_roundStarted)
+        if (_rounds == 0)
             return;
-        _roundStarted = false;
+
+        if (_rounds < _restartOn)
+            return;
 
         _baseServer.Shutdown("Раунд завершился, сервер перезапускается.");
     }
